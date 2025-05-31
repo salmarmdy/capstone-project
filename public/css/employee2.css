@@ -333,7 +333,7 @@
         }
 
         .back-btn {
-            position: absolute;
+            /* position: absolute; */
             left: 30px;
             top: 50%;
             transform: translateY(-50%);

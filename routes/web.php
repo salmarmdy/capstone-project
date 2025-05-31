@@ -13,6 +13,7 @@ use App\Http\Controllers\SelfCheckController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DepartmentController;
 
 // Guest routes (tidak perlu login)
 Route::middleware('guest')->group(function () {
@@ -63,6 +64,15 @@ Route::prefix('admin-cms')->group(function () {
         Route::post('/{id}', [ChecklistController::class, 'update'])->name('update');
         Route::delete('/{id}', [ChecklistController::class, 'destroy'])->name('destroy');
     });
+
+     // Department Routes
+    Route::get('/departemen', [DepartmentController::class, 'index'])->name('department-index');
+    Route::post('/departemen', [DepartmentController::class, 'store'])->name('department-create');
+    Route::get('/departemen/{id}', [DepartmentController::class, 'show'])->name('department-show');
+    Route::put('/departemen/{id}', [DepartmentController::class, 'update'])->name('department-update');
+    Route::get('/departemen/{id}/delete', [DepartmentController::class, 'destroy'])->name('department-delete');
+    Route::post('/departemen/{id}/toggle-status', [DepartmentController::class, 'toggleStatus'])->name('department-toggle-status');
+    Route::get('/api/departments/active', [DepartmentController::class, 'getActiveDepartments'])->name('departments-active');
 });
 
 Route::resource('/self-check', SelfCheckController::class);

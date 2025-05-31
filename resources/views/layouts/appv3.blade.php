@@ -9,12 +9,14 @@
 <body>
     <div class="menu-wrapper">
         <div class="main-content">
-            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                @csrf
-                <button type="submit" class="btn btn-danger" onclick="return confirm('Yakin logout?')">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </button>
-            </form>
+             <div style="text-align: right; margin-bottom: 15px;">
+                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Yakin logout?')">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </form>
+            </div>
             @yield('content')
         </div>
     </div>

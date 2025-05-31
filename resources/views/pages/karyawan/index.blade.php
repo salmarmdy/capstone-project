@@ -105,11 +105,8 @@
             <div class="form-row">
                 <label for="department">Departemen</label>
                 <select id="department" name="department" class="custom-dropdown" required>
-                    <option value="IT">IT</option>
-                    <option value="Finance">Finance</option>
-                    <option value="HR">HR</option>
-                    <option value="Marketing">Marketing</option>
-                    <option value="Operations">Operations</option>
+                    <option value="">Pilih Departemen</option>
+                    <!-- Departemen akan dimuat secara dinamis -->
                 </select>
             </div>
             <div class="form-row">
@@ -256,6 +253,47 @@
 </style>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        loadDepartments();
+    });
+
+    function loadDepartments() {
+        fetch('/admin-cms/api/departments/active')
+            .then(response => response.json())
+            .then(departments => {
+                const addSelect = document.getElementById('department');
+                const editSelect = document.getElementById('edit_department');
+                
+                // Clear existing options except the first one
+                addSelect.innerHTML = '<option value="">Pilih Departemen</option>';
+                editSelect.innerHTML = '<option value="">Pilih Departemen</option>';
+                
+                // Add department options
+                departments.forEach(dept => {
+                    const option1 = new Option(`${dept.name} (${dept.code})`, dept.name);
+                    const option2 = new Option(`${dept.name} (${dept.code})`, dept.name);
+                    
+                    addSelect.appendChild(option1);
+                    editSelect.appendChild(option2);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading departments:', error);
+                // Fallback ke dropdown statis jika gagal
+                const departments = ['IT', 'Finance', 'HR', 'Marketing', 'Operations'];
+                const addSelect = document.getElementById('department');
+                const editSelect = document.getElementById('edit_department');
+                
+                departments.forEach(dept => {
+                    const option1 = new Option(dept, dept);
+                    const option2 = new Option(dept, dept);
+                    
+                    addSelect.appendChild(option1);
+                    editSelect.appendChild(option2);
+                });
+            });
+    }
+
     function openModal(modalId) {
         document.getElementById(modalId).style.display = "block";
     }
